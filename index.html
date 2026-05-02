@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DUDES WORLD | NEON EDITION</title>
+    <title>DUDES WORLD | ULTRA NEON</title>
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -21,18 +21,18 @@
             color: white;
             font-family: 'Syncopate', sans-serif;
             overflow: hidden;
-            /* Neon Green Edge Glow */
-            box-shadow: inset 0 0 50px var(--neon-green), inset 0 0 10px var(--neon-green);
+            /* Constant Green Neon Edge Glow */
+            box-shadow: inset 0 0 60px var(--neon-green), inset 0 0 20px var(--neon-green);
         }
 
-        /* --- Snowfall Background --- */
+        /* --- HEAVY SNOWFALL LAYER --- */
         #snow-layer {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2;
+            z-index: -1; /* Behind content but visible */
             pointer-events: none;
         }
 
@@ -44,87 +44,81 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            transition: 0.5s;
+            position: relative;
+            z-index: 10;
         }
 
         .hidden { display: none !important; }
 
-        /* --- Stylish Fonts & Neon --- */
         .neon-title {
             font-size: 3.5rem;
             color: var(--red);
             text-transform: uppercase;
-            text-shadow: 0 0 10px var(--red), 0 0 20px var(--red);
+            text-shadow: 0 0 15px var(--red), 0 0 30px var(--red);
             margin-bottom: 30px;
         }
 
         .btn-main {
-            padding: 15px 50px;
+            padding: 18px 60px;
             background: transparent;
-            border: 2px solid var(--neon-green);
+            border: 3px solid var(--neon-green);
             color: var(--neon-green);
             font-family: 'Syncopate', sans-serif;
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             cursor: pointer;
-            box-shadow: 0 0 15px var(--neon-green);
-            border-radius: 5px;
-            transition: 0.3s;
+            box-shadow: 0 0 20px var(--neon-green);
+            border-radius: 8px;
+            transition: 0.3s ease;
         }
 
         .btn-main:hover {
             background: var(--neon-green);
             color: black;
-            box-shadow: 0 0 30px var(--neon-green);
+            box-shadow: 0 0 40px var(--neon-green);
         }
 
-        .btn-back {
-            margin-top: 40px;
-            color: white;
-            cursor: pointer;
-            text-decoration: underline;
-            font-size: 0.8rem;
-            opacity: 0.7;
-        }
-
-        /* --- Grid & Cards --- */
         .menu-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 25px;
         }
 
         .menu-btn {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid #444;
-            padding: 30px;
+            background: rgba(255,255,255,0.08);
+            border: 2px solid #444;
+            padding: 35px;
             color: white;
             font-weight: bold;
-            border-radius: 10px;
+            border-radius: 15px;
             cursor: pointer;
+            transition: 0.3s;
         }
 
-        .menu-btn:hover { border-color: var(--red); box-shadow: 0 0 10px var(--red); }
+        .menu-btn:hover { 
+            border-color: var(--red); 
+            box-shadow: 0 0 20px var(--red);
+            transform: scale(1.05);
+        }
 
-        /* --- Instagram Button --- */
         .ig-follow-btn {
             display: inline-block;
-            margin-top: 20px;
-            padding: 12px 25px;
+            margin-top: 25px;
+            padding: 15px 35px;
             background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
             color: white;
             text-decoration: none;
-            border-radius: 30px;
-            font-size: 0.9rem;
+            border-radius: 50px;
+            font-size: 1rem;
             font-weight: bold;
-            box-shadow: 0 0 20px rgba(188, 24, 136, 0.5);
+            box-shadow: 0 0 25px rgba(188, 24, 136, 0.6);
         }
 
-        /* --- Floating Dude Care Bubble --- */
+        /* --- FLOATING BUBBLE --- */
         #dude-care-bubble {
             position: fixed;
-            width: 90px;
-            height: 90px;
+            width: 100px;
+            height: 100px;
             background: white;
             color: black;
             border-radius: 50%;
@@ -132,24 +126,23 @@
             align-items: center;
             justify-content: center;
             font-weight: 900;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             text-align: center;
             cursor: pointer;
             z-index: 10000;
-            box-shadow: 0 0 20px white;
+            box-shadow: 0 0 25px white;
             user-select: none;
+            border: 2px solid var(--neon-green);
         }
 
-        /* --- Search bar styling --- */
-        .search-input {
-            width: 80%;
-            padding: 15px;
-            background: #111;
-            border: 1px solid var(--neon-green);
-            color: white;
-            border-radius: 50px;
-            margin-bottom: 20px;
-            text-align: center;
+        .btn-back {
+            margin-top: 50px;
+            color: var(--neon-green);
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-shadow: 0 0 5px var(--neon-green);
         }
     </style>
 </head>
@@ -171,71 +164,49 @@
             <div class="menu-btn" onclick="showPage('paid')">3. P4ID SENSI</div>
             <div class="menu-btn" onclick="showPage('developer')">4. DEVELOPER</div>
         </div>
-        <div class="btn-back" onclick="showPage('main')">Back to Main</div>
+        <div class="btn-back" onclick="showPage('main')">← BACK TO MAIN</div>
     </div>
 
     <div id="prompts" class="page-container hidden">
         <h1 style="color: var(--neon-green)">PROMPTS</h1>
         <h2 style="color: var(--red)">We are Working On it</h2>
-        <div class="btn-back" onclick="showPage('main')">Back to Main</div>
+        <div class="btn-back" onclick="showPage('main')">← BACK TO MAIN</div>
     </div>
 
     <div id="sensi" class="page-container hidden">
-        <h2>MOBILE SENSI</h2>
-        <input type="text" class="search-input" placeholder="Search Mobile Model...">
-        <p style="color:var(--red)">Scroll for more Mobiles</p>
-        <div class="btn-back" onclick="showPage('main')">Back to Main</div>
+        <h2 style="color: var(--neon-green)">SENSI SETTINGS</h2>
+        <input type="text" placeholder="Search Mobile..." style="padding:15px; border-radius:30px; border:1px solid var(--neon-green); background:#111; color:white; width:250px;">
+        <div class="btn-back" onclick="showPage('main')">← BACK TO MAIN</div>
     </div>
 
     <div id="paid" class="page-container hidden">
         <h2 style="color: var(--red)">+91 80895 37427</h2>
-        <p>For Paid Sensi Message To Dude (399₹)</p>
-        <div class="btn-back" onclick="showPage('main')">Back to Main</div>
+        <p>Premium Sensi starting 399₹</p>
+        <div class="btn-back" onclick="showPage('main')">← BACK TO MAIN</div>
     </div>
 
     <div id="developer" class="page-container hidden">
         <h1 style="color: var(--neon-green)">DEVELOPER</h1>
-        <p>Instagram ID: <span style="color: var(--red)">@__sinu__si777</span></p>
+        <p>IG: <span style="color: var(--red)">@__sinu__si777</span></p>
         <a href="https://instagram.com/__sinu__si777" target="_blank" class="ig-follow-btn">FOLLOW ON INSTAGRAM</a>
-        <p style="margin-top:20px">WhatsApp: +91 80895 37427</p>
-        <div class="btn-back" onclick="showPage('main')">Back to Main</div>
+        <div class="btn-back" onclick="showPage('main')">← BACK TO MAIN</div>
     </div>
 
     <div id="care" class="page-container hidden">
-        <h1 style="color: var(--neon-green)">DUDE CARE HELP</h1>
-        <p>Contact WhatsApp: +91 80895 37427</p>
-        <p>Instagram: @__sinu__si777</p>
-        <div class="btn-back" onclick="showPage('main')">Back to Main</div>
+        <h1 style="color: var(--neon-green)">DUDE CARE</h1>
+        <p>WA: +91 80895 37427</p>
+        <p>IG: @__sinu__si777</p>
+        <div class="btn-back" onclick="showPage('main')">← BACK TO MAIN</div>
     </div>
 
     <script>
-        // Navigation
+        // Navigation Logic
         function showPage(id) {
             document.querySelectorAll('.page-container').forEach(p => p.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
         }
 
-        // --- Bouncing Bubble Logic ---
-        const bubble = document.getElementById('dude-care-bubble');
-        let posX = Math.random() * (window.innerWidth - 90);
-        let posY = Math.random() * (window.innerHeight - 90);
-        let velX = 2;
-        let velY = 2;
-
-        function moveBubble() {
-            posX += velX;
-            posY += velY;
-
-            if (posX + 90 > window.innerWidth || posX < 0) velX *= -1;
-            if (posY + 90 > window.innerHeight || posY < 0) velY *= -1;
-
-            bubble.style.left = posX + 'px';
-            bubble.style.top = posY + 'px';
-            requestAnimationFrame(moveBubble);
-        }
-        moveBubble();
-
-        // --- Snowfall Logic ---
+        // --- IMPROVED HEAVY SNOW LOGIC ---
         const canvas = document.getElementById('snow-layer');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -244,32 +215,56 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             particles = [];
-            for (let i = 0; i < 100; i++) {
+            for (let i = 0; i < 150; i++) { // More particles
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    r: Math.random() * 3 + 1,
-                    d: Math.random() * 1
+                    r: Math.random() * 4 + 2, // Larger dots
+                    d: Math.random() * 10,
+                    speed: Math.random() * 2 + 1
                 });
             }
         }
 
         function drawSnow() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
+            ctx.fillStyle = "rgba(255, 255, 255, 0.9)"; // Brighter white
             ctx.beginPath();
             for (let p of particles) {
                 ctx.moveTo(p.x, p.y);
                 ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                p.y += Math.cos(p.d) + 1 + p.r / 2;
-                if (p.y > canvas.height) p.y = -10, p.x = Math.random() * canvas.width;
+                p.y += p.speed;
+                p.x += Math.sin(p.d) * 0.5;
+                if (p.y > canvas.height) {
+                    p.y = -10;
+                    p.x = Math.random() * canvas.width;
+                }
             }
             ctx.fill();
             requestAnimationFrame(drawSnow);
         }
+
+        // --- BUBBLE PHYSICS ---
+        const bubble = document.getElementById('dude-care-bubble');
+        let bX = Math.random() * (window.innerWidth - 100);
+        let bY = Math.random() * (window.innerHeight - 100);
+        let bVX = 2.5; 
+        let bVY = 2.5;
+
+        function animateBubble() {
+            bX += bVX;
+            bY += bVY;
+            if (bX + 100 > window.innerWidth || bX < 0) bVX *= -1;
+            if (bY + 100 > window.innerHeight || bY < 0) bVY *= -1;
+            bubble.style.left = bX + 'px';
+            bubble.style.top = bY + 'px';
+            requestAnimationFrame(animateBubble);
+        }
+
         window.addEventListener('resize', initSnow);
         initSnow();
         drawSnow();
+        animateBubble();
     </script>
 </body>
 </html>
