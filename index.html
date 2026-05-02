@@ -25,14 +25,14 @@
             box-shadow: inset 0 0 60px var(--neon-green), inset 0 0 20px var(--neon-green);
         }
 
-        /* --- HEAVY SNOWFALL LAYER --- */
+        /* --- FIXED SNOWFALL LAYER --- */
         #snow-layer {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1; /* Behind content but visible */
+            z-index: 1; /* Moved up so it's visible over the glow */
             pointer-events: none;
         }
 
@@ -45,7 +45,7 @@
             justify-content: center;
             text-align: center;
             position: relative;
-            z-index: 10;
+            z-index: 10; /* Content stays on top */
         }
 
         .hidden { display: none !important; }
@@ -60,7 +60,7 @@
 
         .btn-main {
             padding: 18px 60px;
-            background: transparent;
+            background: rgba(0,0,0,0.6);
             border: 3px solid var(--neon-green);
             color: var(--neon-green);
             font-family: 'Syncopate', sans-serif;
@@ -70,6 +70,7 @@
             box-shadow: 0 0 20px var(--neon-green);
             border-radius: 8px;
             transition: 0.3s ease;
+            backdrop-filter: blur(5px);
         }
 
         .btn-main:hover {
@@ -93,6 +94,7 @@
             border-radius: 15px;
             cursor: pointer;
             transition: 0.3s;
+            backdrop-filter: blur(5px);
         }
 
         .menu-btn:hover { 
@@ -130,9 +132,9 @@
             text-align: center;
             cursor: pointer;
             z-index: 10000;
-            box-shadow: 0 0 25px white;
+            box-shadow: 0 0 30px white;
             user-select: none;
-            border: 2px solid var(--neon-green);
+            border: 3px solid var(--neon-green);
         }
 
         .btn-back {
@@ -143,6 +145,17 @@
             font-weight: bold;
             letter-spacing: 2px;
             text-shadow: 0 0 5px var(--neon-green);
+        }
+
+        .search-input {
+            padding:15px; 
+            border-radius:30px; 
+            border:2px solid var(--neon-green); 
+            background:rgba(17, 17, 17, 0.8); 
+            color:white; 
+            width:280px;
+            text-align: center;
+            font-family: 'Syncopate', sans-serif;
         }
     </style>
 </head>
@@ -174,14 +187,15 @@
     </div>
 
     <div id="sensi" class="page-container hidden">
-        <h2 style="color: var(--neon-green)">SENSI SETTINGS</h2>
-        <input type="text" placeholder="Search Mobile..." style="padding:15px; border-radius:30px; border:1px solid var(--neon-green); background:#111; color:white; width:250px;">
+        <h2 style="color: var(--neon-green)">MOBILE SENSI</h2>
+        <input type="text" class="search-input" placeholder="Search Mobile Model...">
+        <p style="color:var(--red); margin-top: 20px;">SCROLL FOR MORE MOBILES</p>
         <div class="btn-back" onclick="showPage('main')">← BACK TO MAIN</div>
     </div>
 
     <div id="paid" class="page-container hidden">
         <h2 style="color: var(--red)">+91 80895 37427</h2>
-        <p>Premium Sensi starting 399₹</p>
+        <p>Premium Sensi Message To Dude (399₹)</p>
         <div class="btn-back" onclick="showPage('main')">← BACK TO MAIN</div>
     </div>
 
@@ -193,20 +207,19 @@
     </div>
 
     <div id="care" class="page-container hidden">
-        <h1 style="color: var(--neon-green)">DUDE CARE</h1>
-        <p>WA: +91 80895 37427</p>
-        <p>IG: @__sinu__si777</p>
+        <h1 style="color: var(--neon-green)">DUDE CARE HELP</h1>
+        <p>WhatsApp: +91 80895 37427</p>
+        <p>Instagram: @__sinu__si777</p>
         <div class="btn-back" onclick="showPage('main')">← BACK TO MAIN</div>
     </div>
 
     <script>
-        // Navigation Logic
         function showPage(id) {
             document.querySelectorAll('.page-container').forEach(p => p.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
         }
 
-        // --- IMPROVED HEAVY SNOW LOGIC ---
+        // --- ENHANCED SNOW LOGIC ---
         const canvas = document.getElementById('snow-layer');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -215,32 +228,34 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             particles = [];
-            for (let i = 0; i < 150; i++) { // More particles
+            for (let i = 0; i < 120; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    r: Math.random() * 4 + 2, // Larger dots
+                    r: Math.random() * 3 + 2, // Bigger dots
                     d: Math.random() * 10,
-                    speed: Math.random() * 2 + 1
+                    speed: Math.random() * 1.5 + 0.5,
+                    opacity: Math.random() * 0.5 + 0.5
                 });
             }
         }
 
         function drawSnow() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "rgba(255, 255, 255, 0.9)"; // Brighter white
-            ctx.beginPath();
             for (let p of particles) {
-                ctx.moveTo(p.x, p.y);
+                ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
+                ctx.beginPath();
                 ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fill();
+                
                 p.y += p.speed;
                 p.x += Math.sin(p.d) * 0.5;
+
                 if (p.y > canvas.height) {
                     p.y = -10;
                     p.x = Math.random() * canvas.width;
                 }
             }
-            ctx.fill();
             requestAnimationFrame(drawSnow);
         }
 
@@ -248,8 +263,8 @@
         const bubble = document.getElementById('dude-care-bubble');
         let bX = Math.random() * (window.innerWidth - 100);
         let bY = Math.random() * (window.innerHeight - 100);
-        let bVX = 2.5; 
-        let bVY = 2.5;
+        let bVX = 2; 
+        let bVY = 2;
 
         function animateBubble() {
             bX += bVX;
